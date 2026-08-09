@@ -1,0 +1,15 @@
+<svg viewBox="0 0 48 48" width="48" height="48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gsFavGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="50%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" rx="12" fill="#050508"/>
+  <rect x="2" y="2" width="44" height="44" rx="10" fill="url(#gsFavGrad)" fill-opacity="0.14" stroke="url(#gsFavGrad)" stroke-width="1.5"/>
+  <!-- G vector -->
+  <path d="M 23 15 H 17 C 13.5 15 13.5 24 17 24 H 23 V 20" stroke="url(#gsFavGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- S vector -->
+  <path d="M 31 33 H 25 C 21.5 33 21.5 24 25 24 H 31 C 34.5 24 34.5 15 31 15 H 25" stroke="#F8FAFC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
