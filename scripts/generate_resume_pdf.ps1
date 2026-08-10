@@ -1,4 +1,4 @@
-$pdfPath = "c:\Users\grant\Desktop\portfolio\assets\Granth_Senjaliya_Resume.pdf"
+$pdfPath = Join-Path $PSScriptRoot "..\assets\docs\Granth_Senjaliya_Resume.pdf"
 
 # Write a basic valid PDF file format (PDF-1.4) containing Granth's resume text
 $pdfContent = @"

@@ -1,5 +1,5 @@
 $port = 3000
-$root = "C:\Users\grant\Desktop\portfolio"
+$root = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $url  = "http://localhost:$port/"
 
 $listener = New-Object System.Net.HttpListener
