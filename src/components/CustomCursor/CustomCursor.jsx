@@ -4,10 +4,13 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 export default function CustomCursor() {
   const x = useMotionValue(-100);
   const y = useMotionValue(-100);
-  const springX = useSpring(x, { stiffness: 520, damping: 38, mass: .2 });
-  const springY = useSpring(y, { stiffness: 520, damping: 38, mass: .2 });
+  // A tight spring keeps the cursor polished without the distracting lag of a
+  // heavily animated pointer.
+  const springX = useSpring(x, { stiffness: 850, damping: 48, mass: .12 });
+  const springY = useSpring(y, { stiffness: 850, damping: 48, mass: .12 });
   const [state, setState] = useState({ active: false, label: "" });
   const [enabled, setEnabled] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const finePointer = window.matchMedia("(pointer: fine)");
@@ -18,7 +21,9 @@ export default function CustomCursor() {
     const move = (event) => {
       x.set(event.clientX);
       y.set(event.clientY);
+      setVisible(true);
     };
+    const leave = () => setVisible(false);
     const over = (event) => {
       const target = event.target.closest("[data-cursor], a, button");
       setState({ active: Boolean(target), label: target?.dataset.cursor || "" });
@@ -27,11 +32,13 @@ export default function CustomCursor() {
     finePointer.addEventListener("change", sync);
     reduced.addEventListener("change", sync);
     window.addEventListener("pointermove", move, { passive: true });
+    document.documentElement.addEventListener("mouseleave", leave);
     document.addEventListener("pointerover", over);
     return () => {
       finePointer.removeEventListener("change", sync);
       reduced.removeEventListener("change", sync);
       window.removeEventListener("pointermove", move);
+      document.documentElement.removeEventListener("mouseleave", leave);
       document.removeEventListener("pointerover", over);
     };
   }, [x, y]);
@@ -44,6 +51,7 @@ export default function CustomCursor() {
       className="custom-cursor"
       data-active={state.active}
       data-has-label={Boolean(state.label)}
+      data-visible={visible}
       style={{ x: springX, y: springY }}
     >
       {state.label && <span>{state.label}</span>}
