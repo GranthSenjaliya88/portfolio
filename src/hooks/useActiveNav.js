@@ -1,27 +1,24 @@
-﻿import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 
-const SECTIONS = ["home", "about", "skills", "projects", "dsa", "education", "contact"];
+const SECTION_IDS = ["home", "about", "projects", "skills", "education", "contact"];
 
 export function useActiveNav() {
   const [activeSection, setActiveSection] = useState("home");
 
-  const updateActive = useCallback(() => {
-    const pos = window.scrollY + 120;
-    let current = "home";
-    for (const id of SECTIONS) {
-      const el = document.getElementById(id);
-      if (el && pos >= el.offsetTop && pos < el.offsetTop + el.offsetHeight) {
-        current = id;
-      }
-    }
-    setActiveSection(current);
-  }, []);
-
   useEffect(() => {
-    updateActive();
-    window.addEventListener("scroll", updateActive, { passive: true });
-    return () => window.removeEventListener("scroll", updateActive);
-  }, [updateActive]);
+    const sections = SECTION_IDS.map((id) => document.getElementById(id)).filter(Boolean);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActiveSection(visible.target.id);
+      },
+      { rootMargin: "-20% 0px -65% 0px", threshold: [0, .08, .2] },
+    );
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
 
   return activeSection;
 }

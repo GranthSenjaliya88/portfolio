@@ -1,402 +1,85 @@
-﻿import { useState, useEffect, useRef } from "react";
-import styled, { css } from "styled-components";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowUpRight, FileText, Menu, X } from "lucide-react";
 
 const NAV_ITEMS = [
-  { id: "home", label: "Home" },
   { id: "about", label: "About" },
-  { id: "skills", label: "Skills" },
-  { id: "projects", label: "Projects" },
-  { id: "dsa", label: "DSA" },
-  { id: "education", label: "Education" },
+  { id: "projects", label: "Work" },
+  { id: "skills", label: "Stack" },
+  { id: "education", label: "Journey" },
   { id: "contact", label: "Contact" },
 ];
-
-const Header = styled.header`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  transition: background 0.4s ${({ theme }) => theme.transitions.easeOut},
-              border-color 0.4s,
-              box-shadow 0.4s;
-
-  ${({ $scrolled, theme }) =>
-    $scrolled &&
-    css`
-      background: rgba(4, 13, 26, 0.92);
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      border-bottom: 1px solid ${theme.colors.border};
-      box-shadow: ${theme.shadows.md};
-    `}
-`;
-
-const Nav = styled.nav`
-  max-width: ${({ theme }) => theme.spacing.container};
-  margin: 0 auto;
-  padding: 0.85rem 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding: 0.75rem 1.25rem;
-  }
-`;
-
-const Logo = styled.a`
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  flex-shrink: 0;
-  transition: opacity 0.2s;
-
-  &:hover {
-    opacity: 0.85;
-  }
-`;
-
-const LogoText = styled.span`
-  font-family: ${({ theme }) => theme.fonts.heading};
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: ${({ theme }) => theme.colors.text};
-  letter-spacing: -0.01em;
-`;
-
-const LogoDot = styled.span`
-  color: ${({ theme }) => theme.colors.accent};
-`;
-
-const NavLinks = styled.ul`
-  display: flex;
-  align-items: center;
-  gap: 0.15rem;
-  margin-left: auto;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: min(300px, 85vw);
-    height: 100vh;
-    background: rgba(4, 13, 26, 0.98);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    flex-direction: column;
-    gap: 0;
-    padding: 5rem 2rem 2rem;
-    border-left: 1px solid ${({ theme }) => theme.colors.border};
-    z-index: 999;
-    align-items: flex-start;
-    display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")};
-
-    li {
-      width: 100%;
-    }
-  }
-`;
-
-const NavLink = styled.a`
-  position: relative;
-  color: ${({ theme }) => theme.colors.text3};
-  font-size: ${({ theme }) => theme.typography.small};
-  font-weight: 500;
-  padding: 0.45rem 0.75rem;
-  border-radius: ${({ theme }) => theme.radii.sm};
-  letter-spacing: 0.01em;
-  transition: color 0.2s, background 0.2s;
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 2px;
-    left: 50%;
-    right: 50%;
-    height: 2px;
-    background: ${({ theme }) => theme.colors.accent};
-    border-radius: ${({ theme }) => theme.radii.full};
-    transition: left 0.3s ${({ theme }) => theme.transitions.spring},
-                right 0.3s ${({ theme }) => theme.transitions.spring};
-  }
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.text};
-
-    &::after {
-      left: 12px;
-      right: 12px;
-    }
-  }
-
-  ${({ $isActive, theme }) =>
-    $isActive &&
-    css`
-      color: ${theme.colors.text};
-      background: rgba(20, 184, 166, 0.1);
-
-      &::after {
-        left: 12px;
-        right: 12px;
-        opacity: 0.9;
-      }
-    `}
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: block;
-    padding: 0.85rem 0;
-    font-size: 1rem;
-    border-bottom: 1px solid ${({ theme }) => theme.colors.border};
-    border-radius: 0;
-    width: 100%;
-
-    &::after {
-      display: none;
-    }
-
-    ${({ $isActive }) =>
-      $isActive &&
-      css`
-        background: transparent;
-        color: ${({ theme }) => theme.colors.accent};
-      `}
-  }
-`;
-
-const Actions = styled.div`
-  flex-shrink: 0;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: none;
-  }
-`;
-
-const ResumeBtn = styled.button`
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.42rem 0.95rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.text2};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: ${({ theme }) => theme.radii.full};
-  transition: all ${({ theme }) => theme.transitions.default};
-  background: none;
-  cursor: pointer;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.bg};
-    border-color: ${({ theme }) => theme.colors.accent};
-    background: ${({ theme }) => theme.colors.accent};
-    transform: translateY(-1px);
-    box-shadow: ${({ theme }) => theme.shadows.glow};
-  }
-`;
-
-const MobileResumeWrap = styled.li`
-  display: none;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: block;
-    padding: 1rem 0;
-    width: 100%;
-  }
-`;
-
-const MobileResumeBtn = styled(ResumeBtn)`
-  width: 100%;
-  justify-content: center;
-  padding: 0.75rem 1rem;
-  font-size: 0.95rem;
-  border-radius: ${({ theme }) => theme.radii.md};
-  background: ${({ theme }) => theme.gradients.primary};
-  color: #ffffff;
-  border: none;
-`;
-
-const Hamburger = styled.button`
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  padding: 0.5rem;
-  border-radius: ${({ theme }) => theme.radii.sm};
-  transition: background 0.15s;
-  background: none;
-  border: none;
-  cursor: pointer;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.05);
-  }
-
-  span {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: ${({ theme }) => theme.colors.text2};
-    border-radius: ${({ theme }) => theme.radii.full};
-    transition: all 0.35s ${({ theme }) => theme.transitions.spring};
-  }
-
-  ${({ $isOpen }) =>
-    $isOpen &&
-    css`
-      span:nth-child(1) {
-        transform: translateY(7px) rotate(45deg);
-      }
-      span:nth-child(2) {
-        opacity: 0;
-        transform: scaleX(0);
-      }
-      span:nth-child(3) {
-        transform: translateY(-7px) rotate(-45deg);
-      }
-    `}
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: flex;
-    margin-left: auto;
-  }
-`;
-
-const Backdrop = styled.div`
-  display: none;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: block;
-    position: fixed;
-    inset: 0;
-    z-index: 998;
-    background: rgba(0, 0, 0, 0.5);
-  }
-`;
-
-const BrandMark = () => (
-  <svg viewBox="0 0 48 48" width="38" height="38" fill="none" aria-hidden="true">
-    <defs>
-      <linearGradient id="gsNavGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#14b8a6" />
-        <stop offset="50%" stopColor="#06b6d4" />
-        <stop offset="100%" stopColor="#22d3ee" />
-      </linearGradient>
-    </defs>
-    <rect width="48" height="48" rx="12" fill="#06142d" />
-    <rect x="1.5" y="1.5" width="45" height="45" rx="11" fill="url(#gsNavGrad)" fillOpacity="0.15" stroke="url(#gsNavGrad)" strokeWidth="1.5" />
-    <path d="M 23 15 H 17 C 13.5 15 13.5 24 17 24 H 23 V 20" stroke="url(#gsNavGrad)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M 31 33 H 25 C 21.5 33 21.5 24 25 24 H 31 C 34.5 24 34.5 15 31 15 H 25" stroke="#F8FAFC" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
 export default function Navbar({ activeSection, onOpenResume }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const navRef = useRef(null);
-  const hamburgerRef = useRef(null);
-  const menuId = "nav-mobile-menu";
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const update = () => setScrolled(window.scrollY > 24);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
   }, []);
 
-  const closeMenu = () => {
-    setMenuOpen(false);
-    document.body.style.overflow = "";
-  };
-
-  const toggleMenu = () => {
-    const next = !menuOpen;
-    setMenuOpen(next);
-    document.body.style.overflow = next ? "hidden" : "";
-    if (!next) hamburgerRef.current?.focus();
-  };
-
-  const handleNavClick = (id) => {
-    closeMenu();
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
-
   useEffect(() => {
-    const onKey = (e) => {
-      if (e.key === "Escape" && menuOpen) closeMenu();
-    };
-    const onOutside = (e) => {
-      if (menuOpen && navRef.current && !navRef.current.contains(e.target)) {
-        closeMenu();
-      }
-    };
-    document.addEventListener("keydown", onKey);
-    document.addEventListener("mousedown", onOutside);
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.removeEventListener("mousedown", onOutside);
-    };
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  useEffect(() => () => {
-    document.body.style.overflow = "";
-  }, []);
+  const goTo = (id) => {
+    setMenuOpen(false);
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
-    <Header $scrolled={scrolled} id="navHeader" role="banner" ref={navRef}>
-      <Nav aria-label="Main navigation">
-        <Logo href="#home" aria-label="Granth Senjaliya Home" onClick={(e) => { e.preventDefault(); handleNavClick("home"); }}>
-          <BrandMark />
-          <LogoText>Granth<LogoDot>.</LogoDot></LogoText>
-        </Logo>
+    <header className={`editorial-nav fixed inset-x-0 top-0 z-[1000] transition-all duration-300 ${scrolled ? "nav-glass" : ""}`}>
+      <nav className="mx-auto flex h-[76px] max-w-[1440px] items-center justify-between px-5 md:px-8 lg:px-12" aria-label="Main navigation">
+        <button className="group flex items-center gap-3 text-left" onClick={() => goTo("home")} aria-label="Granth Senjaliya, home">
+          <span className="display-type grid size-10 place-items-center rounded-full border-2 border-current text-base transition-transform duration-300 group-hover:rotate-[-10deg]">GS</span>
+          <span className="hidden leading-none sm:block">
+            <span className="display-type block text-sm font-extrabold uppercase tracking-[-.03em]">Granth Senjaliya</span>
+            <span className="tech-type mt-1 block text-[9px] uppercase tracking-[.18em] opacity-60">Engineer / Builder</span>
+          </span>
+        </button>
 
-        <NavLinks id={menuId} $isOpen={menuOpen} role="list">
-          {NAV_ITEMS.map((item) => (
+        <ul className="hidden items-center gap-6 lg:flex">
+          {NAV_ITEMS.map((item, index) => (
             <li key={item.id}>
-              <NavLink
-                href={`#${item.id}`}
-                $isActive={activeSection === item.id}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick(item.id);
-                }}
-                aria-current={activeSection === item.id ? "page" : undefined}
-              >
-                {item.label}
-              </NavLink>
+              <button className="signal-link tech-type text-[11px] font-bold uppercase tracking-[.14em]" data-active={activeSection === item.id} onClick={() => goTo(item.id)}>
+                <span className="mr-1.5 opacity-40">0{index + 1}</span>{item.label}
+              </button>
             </li>
           ))}
-          <MobileResumeWrap>
-            <MobileResumeBtn onClick={() => { onOpenResume(); closeMenu(); }}>
-              Resume
-            </MobileResumeBtn>
-          </MobileResumeWrap>
-        </NavLinks>
+        </ul>
 
-        <Actions>
-          <ResumeBtn onClick={onOpenResume} aria-label="Open Resume Preview">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-              <polyline points="14 2 14 8 20 8" />
-              <line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" />
-            </svg>
-            Resume
-          </ResumeBtn>
-        </Actions>
+        <div className="hidden items-center gap-3 lg:flex">
+          <button onClick={onOpenResume} className="tech-type flex items-center gap-2 rounded-full border border-black/25 px-4 py-2 text-[10px] font-bold uppercase tracking-[.12em] transition-colors hover:bg-black hover:text-white">
+            <FileText size={14} /> Resume
+          </button>
+          <a href="mailto:granthsenjaliya881@gmail.com" className="grid size-10 place-items-center rounded-full bg-[var(--signal)] text-white transition-transform hover:rotate-12" aria-label="Email Granth">
+            <ArrowUpRight size={18} />
+          </a>
+        </div>
 
-        <Hamburger
-          $isOpen={menuOpen}
-          onClick={toggleMenu}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-          aria-controls={menuId}
-          ref={hamburgerRef}
-        >
-          <span /><span /><span />
-        </Hamburger>
-      </Nav>
-      {menuOpen && <Backdrop onClick={closeMenu} aria-hidden="true" />}
-    </Header>
+        <button className="grid size-11 place-items-center rounded-full border border-black/25 lg:hidden" onClick={() => setMenuOpen((open) => !open)} aria-expanded={menuOpen} aria-controls="mobile-menu" aria-label={menuOpen ? "Close menu" : "Open menu"}>
+          {menuOpen ? <X /> : <Menu />}
+        </button>
+      </nav>
+
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div id="mobile-menu" initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -16 }} className="absolute inset-x-3 top-[76px] rounded-2xl border border-black/15 bg-[var(--ink)] p-4 text-[var(--paper)] shadow-2xl lg:hidden">
+            {NAV_ITEMS.map((item, index) => (
+              <button key={item.id} onClick={() => goTo(item.id)} className="display-type flex w-full items-center justify-between border-b border-white/15 px-2 py-4 text-2xl uppercase last:border-0">
+                {item.label}<span className="tech-type text-[10px] opacity-50">0{index + 1}</span>
+              </button>
+            ))}
+            <button onClick={() => { setMenuOpen(false); onOpenResume(); }} className="tech-type mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--signal)] px-4 py-4 text-xs font-bold uppercase tracking-[.14em]">
+              <FileText size={16} /> Open resume
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 }
