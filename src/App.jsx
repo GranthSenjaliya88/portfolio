@@ -1,6 +1,5 @@
-import { lazy, Suspense, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import Loader from "./components/Loader/Loader";
+import { lazy, Suspense, useCallback, useRef, useState } from "react";
+import { MotionConfig } from "framer-motion";
 import Navbar from "./components/Navbar/Navbar";
 import Hero from "./components/Hero/Hero";
 import About from "./components/About/About";
@@ -18,52 +17,44 @@ import { useGsapReveal } from "./hooks/useGsapReveal";
 
 const ResumeModal = lazy(() => import("./components/ResumeModal/ResumeModal"));
 
-function Portfolio() {
+export default function App() {
   const [resumeOpen, setResumeOpen] = useState(false);
+  const returnFocusRef = useRef(null);
   const activeSection = useActiveNav();
   const scopeRef = useRef(null);
   useGsapReveal(scopeRef);
+  const openResume = useCallback((event) => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    event.preventDefault();
+    returnFocusRef.current = event.currentTarget;
+    setResumeOpen(true);
+  }, []);
+  const closeResume = useCallback(() => setResumeOpen(false), []);
 
   return (
-    <motion.div
-      ref={scopeRef}
-      className="new-portfolio-shell"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: .55, ease: "easeOut" }}
-    >
+    <MotionConfig reducedMotion="user">
+    <div ref={scopeRef} className="new-portfolio-shell">
+      <div inert={resumeOpen || undefined}>
       <a className="skip-link" href="#main-content">Skip to main content</a>
-      <SmoothScroll />
+      <SmoothScroll paused={resumeOpen} />
       <CustomCursor />
       <ScrollProgress />
-      <Navbar activeSection={activeSection} onOpenResume={() => setResumeOpen(true)} />
-      <main id="main-content">
-        <Hero onOpenResume={() => setResumeOpen(true)} />
+      <Navbar activeSection={activeSection} onOpenResume={openResume} />
+      <main id="main-content" tabIndex={-1}>
+        <Hero onOpenResume={openResume} />
         <About />
         <Projects />
         <Skills />
         <Education />
         <Contact />
       </main>
-      <Footer onOpenResume={() => setResumeOpen(true)} />
+      <Footer onOpenResume={openResume} />
       <BackToTop />
+      </div>
       <Suspense fallback={null}>
-        <ResumeModal isOpen={resumeOpen} onClose={() => setResumeOpen(false)} />
+        {resumeOpen && <ResumeModal isOpen onClose={closeResume} returnFocusRef={returnFocusRef} />}
       </Suspense>
-    </motion.div>
-  );
-}
-
-export default function App() {
-  const [loaded, setLoaded] = useState(false);
-
-  return (
-    <AnimatePresence mode="wait">
-      {!loaded ? (
-        <Loader key="loader" onLoaded={() => setLoaded(true)} />
-      ) : (
-        <Portfolio key="portfolio" />
-      )}
-    </AnimatePresence>
+    </div>
+    </MotionConfig>
   );
 }

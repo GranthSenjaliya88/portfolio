@@ -43,6 +43,11 @@ export default function CustomCursor() {
     };
   }, [x, y]);
 
+  useEffect(() => {
+    document.documentElement.classList.toggle("custom-cursor-enabled", enabled && visible);
+    return () => document.documentElement.classList.remove("custom-cursor-enabled");
+  }, [enabled, visible]);
+
   if (!enabled) return null;
 
   return (

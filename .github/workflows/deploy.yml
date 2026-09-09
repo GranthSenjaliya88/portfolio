@@ -1,4 +1,4 @@
-﻿name: Deploy to GitHub Pages
+name: Validate portfolio
 
 on:
   push:
@@ -7,18 +7,13 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: "pages"
+  group: "portfolio-validation"
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,17 +28,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
+      - name: Build, prerender, and audit SEO
         run: npm run build
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      # The repository publishes the gh-pages branch via npm run deploy.
+      # Source pushes validate here; existing Pages protection stays intact.
+      - name: Upload validated website
+        uses: actions/upload-artifact@v4
         with:
-          path: './dist'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          name: portfolio-site
+          path: dist/
+          include-hidden-files: true

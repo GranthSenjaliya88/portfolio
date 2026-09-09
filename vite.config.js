@@ -28,6 +28,7 @@ export default defineConfig({
     open: false,
   },
   build: {
+    manifest: true,
     rollupOptions: {
       output: {
         manualChunks(id) {

@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -7,6 +6,7 @@
   --ink: #11110f;
   --ink-soft: #292925;
   --signal: #ff5b35;
+  --signal-text: #bd3217;
   --moss: #596b45;
   --line: rgba(17, 17, 15, 0.18);
   font-family: "Manrope", "Segoe UI", sans-serif;
@@ -42,6 +42,7 @@
 
 html {
   scroll-padding-top: 76px;
+  scroll-behavior: smooth;
   background: var(--paper);
 }
 
@@ -287,8 +288,8 @@ button { cursor: pointer; }
 .footer-brand span { color: var(--signal); }
 .footer-grid > div:first-child p { max-width: 32rem; margin: 2rem 0 0; color: rgba(241,239,231,.5); line-height: 1.7; }
 .footer-label { margin-bottom: 1.25rem; color: rgba(241,239,231,.42); font-size: 8px; text-transform: uppercase; letter-spacing: .14em; }
-.footer-grid a, .footer-grid > div:not(:first-child) button { display: flex; align-items: center; gap: .4rem; border: 0; background: transparent; padding: .42rem 0; color: var(--paper); font-size: .88rem; text-transform: capitalize; transition: color .2s, transform .2s; }
-.footer-grid a:hover, .footer-grid > div:not(:first-child) button:hover { color: var(--signal); transform: translateX(4px); }
+.footer-grid a:not(.footer-brand) { display: flex; align-items: center; gap: .4rem; border: 0; background: transparent; padding: .65rem 0; color: var(--paper); font-size: .88rem; text-transform: capitalize; transition: color .2s, transform .2s; }
+.footer-grid a:not(.footer-brand):hover { color: var(--signal); transform: translateX(4px); }
 .footer-bottom { display: flex; justify-content: space-between; gap: 1rem; width: min(100%, 1328px); margin-inline: auto; border-top: 1px solid rgba(241,239,231,.16); padding-top: 1.25rem; color: rgba(241,239,231,.4); font-size: 8px; text-transform: uppercase; letter-spacing: .1em; }
 
 .back-to-top { position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 900; display: grid; width: 3rem; height: 3rem; place-items: center; border: 0; border-radius: 50%; background: var(--paper); color: var(--ink); box-shadow: 0 10px 30px rgba(0,0,0,.18); opacity: 0; transform: translateY(1rem); pointer-events: none; transition: opacity .25s, transform .25s, background .25s, color .25s; }
@@ -314,10 +315,30 @@ button { cursor: pointer; }
 .resume-dialog-actions a:last-child { background: var(--signal); }
 
 @media (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  body, a, button { cursor: none; }
+  .custom-cursor-enabled body, .custom-cursor-enabled a, .custom-cursor-enabled button { cursor: none; }
 }
 
+/* Keep the existing palette, with readable text and keyboard indicators. */
+.section-kicker span:first-child, .fact-index, .skill-card-head, .resume-dialog-head span, .resume-label { color: var(--signal-text); }
+.section-heading--light .section-kicker span:first-child, .fact-card:hover .fact-index, .skill-card:hover .skill-card-head { color: var(--signal); }
+.hero-name .text-\[var\(--signal\)\], .about-lead em { color: #ec4824; }
+.featured-tag, .contact-kicker, .contact-details, .resume-dialog-actions a:last-child { color: var(--ink); }
+.contact-socials a:hover { color: var(--signal-text); }
+.journey-section .section-kicker, .journey-section .section-kicker span:first-child, .journey-section .section-heading p,
+.timeline-date, .timeline-status, .timeline-content p, .timeline-content small, .journey-aside > span, .journey-aside p { color: var(--paper); }
+.practice-band p, .practice-band > div > span { color: white; }
+.contact-form input:focus-visible, .contact-form textarea:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.contact-form input::placeholder, .contact-form textarea::placeholder, .contact-form small, .resume-columns small { color: rgba(17,17,15,.65); }
+.contact-form label > span, .contact-details li span, .footer-label, .resume-label, .resume-dialog-head span { font-size: .75rem; }
+.footer-label, .footer-bottom { color: rgba(241,239,231,.65); }
+.resume-dialog { overscroll-behavior: contain; }
+.resume-overlay { cursor: auto; }
+.resume-overlay a, .resume-overlay button { cursor: pointer; }
+.section-heading-grid > *, .project-row > *, .contact-grid > *, .form-row > * { min-width: 0; }
+html.lenis { scroll-behavior: auto; }
+
 @media (max-width: 1023px) {
+  .project-footer { flex-wrap: wrap; }
   .section-heading-grid { grid-template-columns: 1fr; gap: 1.5rem; }
   .about-grid { grid-template-columns: 1fr; }
   .about-visual { width: min(100%, 620px); justify-self: end; }
@@ -360,6 +381,7 @@ button { cursor: pointer; }
 }
 
 @media (max-width: 420px) {
+  .skills-section .section-heading h2 { font-size: clamp(2.5rem, 13vw, 3.25rem); }
   .loader-top span:last-child { display: none; }
   .facts-grid { grid-template-columns: 1fr; }
   .about-stamp { width: 6.7rem; height: 6.7rem; font-size: 1.2rem; }

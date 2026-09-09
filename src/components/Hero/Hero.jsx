@@ -2,9 +2,10 @@ import { useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowDown, ArrowUpRight, GitBranch, MapPin } from "lucide-react";
 import profileWebp from "../../assets/images/granth-profile.webp";
+import profileSmall from "../../assets/images/granth-profile-480.webp";
 
 const reveal = {
-  hidden: { opacity: 0, y: 38 },
+  hidden: { opacity: 1, y: 24 },
   show: (delay = 0) => ({ opacity: 1, y: 0, transition: { delay, duration: .85, ease: [.16, 1, .3, 1] } }),
 };
 
@@ -34,28 +35,28 @@ export default function Hero({ onOpenResume }) {
           </motion.div>
 
           <h1 id="hero-title" className="hero-name display-type font-black">
-            <span className="block overflow-hidden pb-2"><motion.span className="block" variants={reveal} initial="hidden" animate="show" custom={.15}>Granth</motion.span></span>
+            <span className="block overflow-hidden pb-2"><motion.span className="block" variants={reveal} initial="hidden" animate="show" custom={.15}>Granth</motion.span></span>{" "}
             <span className="block overflow-hidden pb-3"><motion.span className="block pl-0 text-[var(--signal)] sm:pl-[5vw] lg:pl-[5vw]" variants={reveal} initial="hidden" animate="show" custom={.24}>Senjaliya</motion.span></span>
           </h1>
 
           <motion.div variants={reveal} initial="hidden" animate="show" custom={.38} className="mt-7 grid max-w-4xl gap-7 border-t border-black/25 pt-6 sm:grid-cols-[1fr_auto] sm:items-end">
             <p className="max-w-2xl text-base font-medium leading-relaxed text-black/70 md:text-lg">
-              Computer Science Engineering student at <strong className="text-black">CHARUSAT</strong>, building practical software and connected hardware—from responsive web experiences to ESP32-powered systems.
+              CSE student and developer at <strong className="text-black">CHARUSAT</strong>, building practical software and connected hardware—from responsive web experiences to ESP32-powered systems.
             </p>
             <div className="flex flex-wrap gap-3">
               <a href="#projects" className="group flex items-center gap-3 rounded-full bg-[var(--ink)] px-5 py-3 text-sm font-extrabold text-[var(--paper)] transition-transform hover:-translate-y-1">
                 View work <ArrowDown className="transition-transform group-hover:translate-y-1" size={17} />
               </a>
-              <button onClick={onOpenResume} className="group flex items-center gap-3 rounded-full border border-black/30 px-5 py-3 text-sm font-extrabold transition-colors hover:bg-[var(--signal)] hover:text-white">
+              <a href="./Granth_Senjaliya_Resume.pdf" onClick={onOpenResume} className="group flex items-center gap-3 rounded-full border border-black/30 px-5 py-3 text-sm font-extrabold transition-colors hover:bg-[var(--signal)] hover:text-white">
                 Resume <ArrowUpRight className="transition-transform group-hover:rotate-45" size={17} />
-              </button>
+              </a>
             </div>
           </motion.div>
         </div>
 
         <motion.div variants={reveal} initial="hidden" animate="show" custom={.3} className="relative mx-auto w-full max-w-[500px] pb-8 lg:pb-14">
           <motion.div ref={imageRef} onPointerMove={handlePointer} onPointerLeave={() => { pointerX.set(0); pointerY.set(0); }} style={{ rotateX, rotateY, transformPerspective: 1000 }} className="portrait-frame relative aspect-[4/5] overflow-hidden bg-[var(--moss)]">
-            <img src={profileWebp} alt="Granth Senjaliya standing in front of a mountain landscape" width="768" height="1024" fetchPriority="high" className="h-full w-full object-cover" />
+            <img src={profileWebp} srcSet={`${profileSmall} 479w, ${profileWebp} 767w`} sizes="(min-width: 1024px) 35vw, (min-width: 540px) 500px, calc(100vw - 40px)" alt="Granth Senjaliya — CSE student and developer" width="767" height="1024" fetchPriority="high" className="h-full w-full object-cover" />
             <div className="tech-type absolute bottom-4 left-4 z-10 border-l-2 border-[var(--signal)] pl-3 text-[10px] font-bold uppercase tracking-[.16em] text-white">CSE student<br />Developer · IoT builder</div>
           </motion.div>
 

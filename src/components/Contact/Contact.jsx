@@ -33,7 +33,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <form className="contact-form gsap-reveal" onSubmit={submit}>
+          <form className="contact-form gsap-reveal" action="mailto:granthsenjaliya881@gmail.com" method="post" encType="text/plain" onSubmit={submit}>
             <div className="form-row">
               <label><span className="tech-type">Your name *</span><input name="name" value={form.name} onChange={change} placeholder="What should I call you?" autoComplete="name" required /></label>
               <label><span className="tech-type">Email address *</span><input type="email" name="email" value={form.email} onChange={change} placeholder="you@example.com" autoComplete="email" required /></label>

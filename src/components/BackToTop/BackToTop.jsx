@@ -10,8 +10,8 @@ export default function BackToTop() {
   }, []);
 
   return (
-    <button className="back-to-top" data-visible={visible} onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Back to top" tabIndex={visible ? 0 : -1}>
+    <a href="#home" className="back-to-top" data-visible={visible} aria-label="Back to top" tabIndex={visible ? 0 : -1}>
       <ArrowUp size={18} />
-    </button>
+    </a>
   );
 }

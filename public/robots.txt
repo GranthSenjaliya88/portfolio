@@ -1,0 +1,7 @@
+# Crawl rules are honored only at the host root /robots.txt.
+# On GitHub Pages, /portfolio/robots.txt is provided for reference.
+# Submit the sitemap below directly in Search Console and Bing Webmaster Tools.
+User-agent: *
+Allow: /
+
+Sitemap: https://granthsenjaliya88.github.io/portfolio/sitemap.xml

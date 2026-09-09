@@ -11,6 +11,8 @@ export function useGsapReveal(scopeRef) {
 
     const context = gsap.context(() => {
       gsap.utils.toArray(".gsap-reveal").forEach((element) => {
+        // Do not hide content that is already visible in the prerendered page.
+        if (element.getBoundingClientRect().top < window.innerHeight) return;
         gsap.fromTo(
           element,
           { autoAlpha: 0, y: 56 },
@@ -25,6 +27,7 @@ export function useGsapReveal(scopeRef) {
       });
 
       gsap.utils.toArray(".project-row").forEach((element, index) => {
+        if (element.getBoundingClientRect().top < window.innerHeight) return;
         gsap.fromTo(
           element,
           { clipPath: "inset(0 0 100% 0)", y: 24 },

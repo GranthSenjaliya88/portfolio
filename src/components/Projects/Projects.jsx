@@ -7,7 +7,7 @@ const icons = { iot: Cpu, web: Sprout, elec: Vote };
 function ProjectVisual({ project }) {
   const Icon = icons[project.visualType] || Cpu;
   return (
-    <div className={`project-visual project-visual--${project.visualType}`} data-cursor="View">
+    <div className={`project-visual project-visual--${project.visualType}`} aria-hidden="true">
       <div className="project-visual-grid" />
       <Icon className="project-main-icon" strokeWidth={1.2} />
       <span className="tech-type project-visual-code">PRJ / 0{project.id}</span>
