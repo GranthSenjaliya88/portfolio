@@ -39,13 +39,28 @@ Canonical website: https://granthsenjaliya88.github.io/portfolio/
 
 Browser selection of responsive images depends on screen width and pixel density. These file-size improvements and removal of the artificial delay are not a measured Core Web Vitals score.
 
-## Remaining owner/account steps
+## Search-engine account checks — 2026-09-09
+
+| Check | Observed result |
+| --- | --- |
+| Google ownership | URL-prefix property verified using the real HTML tag; tag published and confirmed in the live homepage |
+| Google live URL test | URL is available to Google; page can be indexed |
+| Google indexing request | Accepted; homepage added to the priority crawl queue. Actual indexing is not confirmed |
+| Google sitemap | Submission accepted and retried once, but latest status remains Couldn't fetch / Sitemap could not be read; discovered pages 0 |
+| Public sitemap validation | Exact submitted URL returns HTTP 200 with valid XML and the canonical homepage entry |
+| Google Pages and Performance | Processing data; Google asks to check again in a day or so |
+| Bing import | Verified Google property and its sitemap imported successfully |
+| Bing sitemap | Success; 1 URL discovered, 0 errors, 0 warnings. Actual indexing is not confirmed |
+
+The ownership tag was committed as `a87f688`, pushed to `main`, and deployed to GitHub Pages. The source validation workflow and Pages deployment both succeeded.
+
+## Remaining checks and owner details
 
 Follow [SEO-SETUP.md](SEO-SETUP.md) for the full checklist and exact Google/Bing instructions.
 
-- Google ownership verification needs the real tag from the owner's account; sitemap submission and indexing requests then happen in Search Console.
-- Bing can import the verified Google property, or use its own real verification tag.
-- The effective host-root `/robots.txt` returned 404. The project's `/portfolio/robots.txt` does not control the host; the missing root file does not prohibit crawling. Submit the sitemap directly.
+- Recheck Google's sitemap processing and homepage indexing status after Google has had time to process the new property. The live URL test passed, but the sitemap fetch error remains unresolved.
+- Review Pages and Performance when Google finishes preparing the reports. Check Bing's URL Inspection for actual indexing; its successful sitemap import alone does not prove indexing.
+- The effective host-root `/robots.txt` returned 404. The project's `/portfolio/robots.txt` does not control the host; the missing root file does not prohibit crawling. The sitemap has been submitted directly.
 - Project links point to the GitHub profile until exact repositories are supplied. Unknown LinkedIn/Instagram URLs are omitted, not guessed.
 - Existing education dates appear inconsistent (university 2022—Present versus 2025 batch and school 2023—2025); they need the owner's factual confirmation.
 - Search-engine indexing, rankings, real-user Core Web Vitals and device/browser combinations beyond those checked are not guaranteed or claimed as verified.

@@ -4,6 +4,16 @@ Website: https://granthsenjaliya88.github.io/portfolio/
 
 Sitemap: https://granthsenjaliya88.github.io/portfolio/sitemap.xml
 
+## Account setup status — 2026-09-09
+
+- Google Search Console: the URL-prefix property is verified using the real HTML tag, which is published on the homepage. Keep that tag in `index.html`.
+- Google's live URL test passed: **URL is available to Google** and **Page can be indexed**. **Request indexing** was accepted and the homepage was added to the priority crawl queue. This does not confirm actual indexing.
+- The sitemap submission was accepted and retried once, but Google's latest status is **Couldn't fetch**, with **Sitemap could not be read** in the details. The exact public sitemap returned HTTP 200 with valid XML. Google processing remains unresolved; check this status again after its next processing attempt rather than repeatedly submitting it.
+- Google's Pages and Performance reports currently say **Processing data, please check again in a day or so**.
+- Bing Webmaster Tools: the verified Google property and its sitemap were imported successfully. Bing reports **Success**, **1 URL discovered**, **0 errors**, and **0 warnings** for the sitemap. This does not confirm that the homepage is indexed in Bing.
+
+The numbered sections below remain a reference for future setup and checks. Completed verification and submissions do not need to be repeated.
+
 ## 1. Confirm the published site
 
 The homepage title should be **Granth Senjaliya | CSE Student & Developer**. Its initial HTML now contains your name, sections, projects, metadata, and Person structured data before JavaScript runs. The design remains a single-page portfolio: About, Projects, Skills, Education, and Contact are sections, not independent pages. The sitemap therefore contains only the homepage's canonical URL. Do not submit `#about` or other fragments as separate pages. See [Google's sitemap guidance](https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap).
@@ -39,11 +49,10 @@ Source: [Google property instructions](https://support.google.com/webmasters/ans
 5. Return to Search Console and click **Verify**. Keep the tag after verification.
 
 ```html
-<!-- REPLACE THIS with Google's complete real verification tag. -->
-<meta name="google-site-verification" content="REPLACE THIS: GOOGLE_VERIFICATION_TOKEN" />
+<meta name="google-site-verification" content="X8M8xKdMRK4MTMiuL_-hMyIffQ5YgmYQ-l6tqN1qAU0" />
 ```
 
-Do not publish the placeholder. You can paste the real tag into the Codex task to have it added. No verification token has been invented or inserted into production metadata.
+The tag above was supplied by Google for this property, published, and successfully verified on 2026-09-09. It is already installed; do not replace it with a placeholder or remove it after verification.
 
 Source: [Google HTML-tag verification](https://support.google.com/webmasters/answer/9008080?hl=en).
 
@@ -80,6 +89,8 @@ Sources: [Page indexing report](https://support.google.com/webmasters/answer/744
 
 ## 7. Bing and other search engines
 
+The Google import is complete for this portfolio, including its sitemap. Manual Bing verification is unnecessary for the current imported property.
+
 1. Open [Bing Webmaster Tools](https://www.bing.com/webmasters/) and sign in.
 2. After Google verification, choose **Import from Google Search Console**, authorize access, select the portfolio, and click **Import**.
 3. Alternatively, manually add the exact portfolio URL and use Bing's HTML meta-tag option. Add its real tag to `index.html`, publish, and verify.
@@ -107,8 +118,8 @@ Sources: [Google robots.txt location requirements](https://developers.google.com
 
 ## 9. Details only you can supply
 
-- **REPLACE THIS: GOOGLE_VERIFICATION_TOKEN** — obtain from your Search Console account.
-- **REPLACE THIS: BING_VERIFICATION_TOKEN** — only for manual Bing verification.
+- Google verification is complete and its real tag is installed. No additional token is needed for the completed Bing import.
+- **REPLACE THIS: BING_VERIFICATION_TOKEN** — only if you later choose manual Bing verification instead of the existing Google import.
 - **REPLACE THIS: MY_LINKEDIN_URL** and **REPLACE THIS: MY_INSTAGRAM_URL** — optional exact URLs. Unknown profiles are omitted from production JSON-LD. GitHub and your confirmed LeetCode URL are included.
 - **REPLACE THIS: PROJECT_REPOSITORY_URLS** — current project links open your GitHub profile. Provide individual repositories or live demos to make those links more specific; destinations were not invented.
 - Confirm existing education dates: university currently says **2022—Present** and **2025 Batch**, alongside school **2023—2025**. These were preserved instead of guessed.
@@ -135,4 +146,4 @@ Use **Granth Senjaliya** consistently as your professional profile name, and put
 - [x] Indexing instructions
 - [x] Technical SEO audit and build checks
 
-Search Console verification, search-engine submissions, actual indexing/ranking, and real-user performance are external outcomes, not completed code changes. Indexing and ranking are not guaranteed.
+Search Console verification, the Google indexing request, and the Bing import are complete as recorded above. Google sitemap processing, actual indexing/ranking, and real-user performance remain external outcomes. Indexing and ranking are not guaranteed.
