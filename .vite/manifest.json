@@ -1,0 +1,75 @@
+{
+  "_animation-BxvexZXi.js": {
+    "file": "assets/animation-BxvexZXi.js",
+    "name": "animation"
+  },
+  "_icons-DQeCSm3o.js": {
+    "file": "assets/icons-DQeCSm3o.js",
+    "name": "icons",
+    "imports": [
+      "_rolldown-runtime-CbXtAM7H.js"
+    ]
+  },
+  "_motion-D8dMCIjo.js": {
+    "file": "assets/motion-D8dMCIjo.js",
+    "name": "motion",
+    "imports": [
+      "_rolldown-runtime-CbXtAM7H.js",
+      "_icons-DQeCSm3o.js"
+    ]
+  },
+  "_react-B3mJssyz.js": {
+    "file": "assets/react-B3mJssyz.js",
+    "name": "react",
+    "imports": [
+      "_rolldown-runtime-CbXtAM7H.js",
+      "_icons-DQeCSm3o.js"
+    ]
+  },
+  "_rolldown-runtime-CbXtAM7H.js": {
+    "file": "assets/rolldown-runtime-CbXtAM7H.js",
+    "name": "rolldown-runtime"
+  },
+  "index.html": {
+    "file": "assets/index-o8KLcRLO.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "imports": [
+      "_rolldown-runtime-CbXtAM7H.js",
+      "_icons-DQeCSm3o.js",
+      "_react-B3mJssyz.js",
+      "_motion-D8dMCIjo.js",
+      "_animation-BxvexZXi.js"
+    ],
+    "dynamicImports": [
+      "src/components/ResumeModal/ResumeModal.jsx"
+    ],
+    "css": [
+      "assets/index-BA43yMWl.css"
+    ],
+    "assets": [
+      "assets/granth-profile-1OopXPz6.webp",
+      "assets/granth-profile-480-Bp0hCoGb.webp"
+    ]
+  },
+  "src/assets/images/granth-profile-480.webp": {
+    "file": "assets/granth-profile-480-Bp0hCoGb.webp",
+    "src": "src/assets/images/granth-profile-480.webp"
+  },
+  "src/assets/images/granth-profile.webp": {
+    "file": "assets/granth-profile-1OopXPz6.webp",
+    "src": "src/assets/images/granth-profile.webp"
+  },
+  "src/components/ResumeModal/ResumeModal.jsx": {
+    "file": "assets/ResumeModal-DERd_B2u.js",
+    "name": "ResumeModal",
+    "src": "src/components/ResumeModal/ResumeModal.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_rolldown-runtime-CbXtAM7H.js",
+      "_icons-DQeCSm3o.js",
+      "_motion-D8dMCIjo.js"
+    ]
+  }
+}
