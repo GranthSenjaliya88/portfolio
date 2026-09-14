@@ -11,7 +11,7 @@
     <meta name="theme-color" content="#0A0A12" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://granthsenjaliya88.github.io/portfolio/" />
-    <meta property="og:site_name" content="Granth Senjaliya Portfolio" />
+    <meta property="og:site_name" content="Granth Senjaliya" />
     <meta property="og:locale" content="en_IN" />
     <meta property="og:title" content="Granth Senjaliya | CSE Student &amp; Developer" />
     <meta property="og:description" content="Granth Senjaliya is a CSE student and developer passionate about web development, programming, C, C++, Java, IoT and software projects." />
@@ -35,16 +35,31 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Person",
-        "@id": "https://granthsenjaliya88.github.io/portfolio/#person",
-        "name": "Granth Senjaliya",
-        "description": "CSE Student & Developer",
-        "url": "https://granthsenjaliya88.github.io/portfolio/",
-        "sameAs": [
-          "https://github.com/GranthSenjaliya88",
-          "https://leetcode.com/u/Granth88/"
-        ],
-        "knowsAbout": ["C", "C++", "Java", "JavaScript", "HTML", "CSS", "Web Development", "IoT", "ESP32", "Arduino", "Software Development"]
+        "@graph": [
+          {
+            "@type": "ProfilePage",
+            "@id": "https://granthsenjaliya88.github.io/portfolio/#profile-page",
+            "url": "https://granthsenjaliya88.github.io/portfolio/",
+            "name": "Granth Senjaliya | CSE Student & Developer",
+            "description": "The official portfolio of Granth Senjaliya, a Computer Science Engineering student and developer in Gujarat, India.",
+            "mainEntity": { "@id": "https://granthsenjaliya88.github.io/portfolio/#person" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://granthsenjaliya88.github.io/portfolio/#person",
+            "name": "Granth Senjaliya",
+            "description": "Computer Science Engineering student, web developer, and IoT builder",
+            "url": "https://granthsenjaliya88.github.io/portfolio/",
+            "image": "https://granthsenjaliya88.github.io/portfolio/portfolio-preview.jpg",
+            "mainEntityOfPage": { "@id": "https://granthsenjaliya88.github.io/portfolio/#profile-page" },
+            "sameAs": [
+              "https://github.com/GranthSenjaliya88",
+              "https://in.linkedin.com/in/granth-senjaliya-713323378",
+              "https://leetcode.com/u/Granth88/"
+            ],
+            "knowsAbout": ["C", "C++", "Java", "JavaScript", "HTML", "CSS", "Web Development", "IoT", "ESP32", "Arduino", "Software Development"]
+          }
+        ]
       }
     </script>
   </head>

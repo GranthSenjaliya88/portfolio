@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { ArrowUpRight, GitBranch, Mail, MapPin, Phone, Send, Sparkles } from "lucide-react";
+import { ArrowUpRight, BriefcaseBusiness, GitBranch, Mail, MapPin, Phone, Send, Sparkles } from "lucide-react";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
@@ -58,6 +58,9 @@ export default function Contact() {
             <div className="contact-socials">
               <a href="https://github.com/GranthSenjaliya88" target="_blank" rel="noreferrer">
                 <GitBranch size={17} /> GitHub <ArrowUpRight size={15} />
+              </a>
+              <a href="https://in.linkedin.com/in/granth-senjaliya-713323378" target="_blank" rel="me noreferrer">
+                <BriefcaseBusiness size={17} /> LinkedIn <ArrowUpRight size={15} />
               </a>
               <a href="https://leetcode.com/u/Granth88/" target="_blank" rel="noreferrer">
                 <Sparkles size={16} className="text-amber-400" /> LeetCode <ArrowUpRight size={15} />

@@ -28,6 +28,9 @@ export default function Footer({ onOpenResume }) {
           <a href="https://github.com/GranthSenjaliya88" target="_blank" rel="noreferrer">
             GitHub <ArrowUpRight size={14} />
           </a>
+          <a href="https://in.linkedin.com/in/granth-senjaliya-713323378" target="_blank" rel="me noreferrer">
+            LinkedIn <ArrowUpRight size={14} />
+          </a>
           <a href="https://leetcode.com/u/Granth88/" target="_blank" rel="noreferrer">
             LeetCode <ArrowUpRight size={14} />
           </a>

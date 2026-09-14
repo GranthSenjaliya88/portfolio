@@ -22,10 +22,14 @@ assert.equal(meta("google-site-verification").length, 1, "Keep the verified Goog
 assert.equal(meta("google-site-verification")[0].content, "X8M8xKdMRK4MTMiuL_-hMyIffQ5YgmYQ-l6tqN1qAU0");
 assert.ok(!html.includes("chatgpt.site") && !html.includes("REPLACE THIS") && !html.includes("MY_WEBSITE_URL"));
 const schema = JSON.parse(head.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
-assert.equal(schema["@type"], "Person");
-assert.equal(schema.name, "Granth Senjaliya");
-assert.equal(schema.url, origin);
-for (const social of schema.sameAs) assert.equal(new URL(social).protocol, "https:");
+const profilePage = schema["@graph"].find((node) => node["@type"] === "ProfilePage");
+const person = schema["@graph"].find((node) => node["@type"] === "Person");
+assert.equal(profilePage.url, origin);
+assert.equal(profilePage.mainEntity["@id"], person["@id"]);
+assert.equal(person.name, "Granth Senjaliya");
+assert.equal(person.url, origin);
+assert.ok(person.sameAs.includes("https://in.linkedin.com/in/granth-senjaliya-713323378"));
+for (const social of person.sameAs) assert.equal(new URL(social).protocol, "https:");
 
 const headings = [...html.matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/g)];
 assert.equal(headings.filter((h) => h[1] === "1").length, 1, "Exactly one H1 must exist in initial HTML");
