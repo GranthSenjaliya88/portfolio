@@ -18,6 +18,8 @@ assert.deepEqual(canonical.map((a) => a.href), [origin]);
 assert.equal(meta("og:url")[0].content, origin);
 assert.equal(meta("twitter:url")[0].content, origin);
 assert.ok(!/noindex|nofollow/i.test(meta("robots")[0].content));
+assert.equal(meta("google-site-verification").length, 1, "Keep the verified Google property tag");
+assert.equal(meta("google-site-verification")[0].content, "X8M8xKdMRK4MTMiuL_-hMyIffQ5YgmYQ-l6tqN1qAU0");
 assert.ok(!html.includes("chatgpt.site") && !html.includes("REPLACE THIS") && !html.includes("MY_WEBSITE_URL"));
 const schema = JSON.parse(head.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
 assert.equal(schema["@type"], "Person");
@@ -28,6 +30,7 @@ for (const social of schema.sameAs) assert.equal(new URL(social).protocol, "http
 const headings = [...html.matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/g)];
 assert.equal(headings.filter((h) => h[1] === "1").length, 1, "Exactly one H1 must exist in initial HTML");
 assert.equal(headings[0][2].replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim(), "Granth Senjaliya");
+assert.ok(!/opacity:\s*0(?:;|")/.test(headings[0][2]), "The prerendered name must stay visible before JavaScript loads");
 let level = 0;
 for (const h of headings) { assert.ok(+h[1] <= level + 1, "Heading levels must not be skipped"); level = +h[1]; }
 const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]);

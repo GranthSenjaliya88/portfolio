@@ -1,4 +1,4 @@
-name: Validate portfolio
+name: Build and deploy portfolio
 
 on:
   push:
@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: "portfolio-validation"
+  group: "github-pages"
   cancel-in-progress: false
 
 jobs:
@@ -22,7 +22,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
 
       - name: Install dependencies
@@ -31,11 +31,26 @@ jobs:
       - name: Build, prerender, and audit SEO
         run: npm run build
 
-      # The repository publishes the gh-pages branch via npm run deploy.
-      # Source pushes validate here; existing Pages protection stays intact.
-      - name: Upload validated website
-        uses: actions/upload-artifact@v4
+      - name: Record deployed source revision
+        run: |
+          node --input-type=module -e "import { writeFileSync } from 'node:fs'; writeFileSync('dist/deployment.json', JSON.stringify({ commit: process.env.GITHUB_SHA, run: process.env.GITHUB_RUN_ID }) + '\n');"
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          name: portfolio-site
           path: dist/
-          include-hidden-files: true
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, FileText, Menu, X } from "lucide-react";
+import { FileText, Menu, X } from "lucide-react";
 
 const NAV_ITEMS = [
   { id: "about",     label: "About"     },
@@ -75,20 +75,13 @@ export default function Navbar({ activeSection, onOpenResume }) {
         </ul>
 
         {/* Desktop actions */}
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="hidden items-center gap-3 lg:flex">
           <a
             href="./Granth_Senjaliya_Resume.pdf"
             onClick={onOpenResume}
             className="nav-resume-btn"
           >
-            <FileText size={14} /> Resume
-          </a>
-          <a
-            href="mailto:granthsenjaliya881@gmail.com"
-            className="nav-email-btn"
-            aria-label="Email Granth"
-          >
-            <ArrowUpRight size={17} />
+            <FileText size={15} /> Resume
           </a>
         </div>
 

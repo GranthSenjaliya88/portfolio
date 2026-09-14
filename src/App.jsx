@@ -8,6 +8,7 @@ import Skills from "./components/Skills/Skills";
 import Education from "./components/Education/Education";
 import Contact from "./components/Contact/Contact";
 import Footer from "./components/Footer/Footer";
+import SectionDivider from "./components/SectionDivider/SectionDivider";
 import SmoothScroll from "./components/SmoothScroll/SmoothScroll";
 import CustomCursor from "./components/CustomCursor/CustomCursor";
 import ScrollProgress from "./components/ScrollProgress/ScrollProgress";
@@ -42,10 +43,15 @@ export default function App() {
       <Navbar activeSection={activeSection} onOpenResume={openResume} />
       <main id="main-content" tabIndex={-1}>
         <Hero onOpenResume={openResume} />
+        <SectionDivider accent="purple" />
         <About />
+        <SectionDivider accent="cyan" />
         <Skills />
+        <SectionDivider accent="orange" />
         <Projects />
+        <SectionDivider accent="pink" />
         <Education />
+        <SectionDivider accent="purple" />
         <Contact />
       </main>
       <Footer onOpenResume={openResume} />

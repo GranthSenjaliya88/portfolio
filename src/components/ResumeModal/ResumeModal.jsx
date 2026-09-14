@@ -1,10 +1,12 @@
 import { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Download, ExternalLink, X } from "lucide-react";
+import { educationItems } from "../../data/education";
 
 export default function ResumeModal({ isOpen, onClose, returnFocusRef }) {
   const closeRef = useRef(null);
   const dialogRef = useRef(null);
+  const university = educationItems.find((item) => item.type === "university");
 
   useEffect(() => {
     if (!isOpen) return undefined;
@@ -51,7 +53,7 @@ export default function ResumeModal({ isOpen, onClose, returnFocusRef }) {
             <div className="resume-dialog-body">
               <p className="resume-intro">Computer Science Engineering student at CHARUSAT, focused on programming, web development, data structures, and connected hardware.</p>
               <div className="resume-columns">
-                <div><span className="tech-type resume-label">Education</span><strong>CHARUSAT University</strong><p>Bachelor of Engineering · Computer Science</p><small>2022—Present · 2025 Batch</small></div>
+                <div><span className="tech-type resume-label">Education</span><strong>{university.institution}</strong><p>{university.degree} · {university.field}</p><small>{university.period} · {university.batch}</small></div>
                 <div><span className="tech-type resume-label">Core stack</span><p>C · C++ · Java · JavaScript · HTML5 · CSS3 · Arduino · ESP32 · Git · Figma</p></div>
               </div>
               <div><span className="tech-type resume-label">Selected work</span><ol className="resume-project-list"><li>ESP32 Voice Controlled Home Automation</li><li>Farmer Guide Website</li><li>Digital Voting System</li></ol></div>

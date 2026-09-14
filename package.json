@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build && node scripts/prerender.mjs && node scripts/audit-seo.mjs",
     "preview": "vite preview",
-    "deploy": "npm run build && gh-pages -d dist --dotfiles",
+    "deploy": "git push origin main",
     "check:seo": "node scripts/audit-seo.mjs"
   },
   "dependencies": {
