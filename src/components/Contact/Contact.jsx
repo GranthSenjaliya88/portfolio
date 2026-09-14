@@ -16,7 +16,8 @@ export default function Contact() {
   return (
     <section id="contact" className="contact-section" aria-labelledby="contact-title">
       <div className="contact-top section-shell">
-        <div className="contact-kicker tech-type gsap-reveal"><span>05</span><span>Contact / Opportunities</span></div>
+        <div className="contact-kicker tech-type gsap-reveal"><span>05</span><span className="contact-kicker-line" /><span>Contact / Opportunities</span></div>
+
         <h2 id="contact-title" className="display-type contact-title gsap-reveal">Let’s build<br /><em>something useful.</em></h2>
 
         <div className="contact-grid">

@@ -2,7 +2,8 @@ export default function SectionHeading({ index, eyebrow, title, description, lig
   return (
     <header className={`section-heading gsap-reveal ${light ? "section-heading--light" : ""}`}>
       <div className="section-kicker tech-type">
-        <span>{index}</span>
+        <span className="section-kicker-num">{index}</span>
+        <span className="section-kicker-line" />
         <span>{eyebrow}</span>
       </div>
       <div className="section-heading-grid">

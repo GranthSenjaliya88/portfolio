@@ -5,13 +5,15 @@ import { educationItems } from "../../data/education";
 export default function Education() {
   return (
     <section id="education" className="section-shell journey-section" aria-labelledby="journey-title">
-      <SectionHeading light index="04" eyebrow="Journey" title={<><span id="journey-title">Still learning.</span><br />Always making.</>} description="My formal education and the hands-on practice running alongside it." />
+      <SectionHeading index="04" eyebrow="Education & practice" title={<><span id="journey-title">Still learning.</span><br />Always making.</>} description="My formal education and the hands-on practice running alongside it." />
 
       <div className="journey-layout">
         <div className="timeline">
           {educationItems.map((item, index) => (
-            <article className="timeline-item gsap-reveal" key={item.id}>
-              <div className="timeline-marker"><span>{item.status === "active" ? <BookOpen size={17} /> : <Check size={17} />}</span></div>
+            <article className="timeline-item gsap-reveal" data-active={item.status === "active"} key={item.id}>
+              <div className={`timeline-marker ${item.status === "active" ? "timeline-marker--active" : "timeline-marker--done"}`}>
+                <span>{item.status === "active" ? <BookOpen size={17} /> : <Check size={17} />}</span>
+              </div>
               <div className="timeline-date tech-type">{item.period}</div>
               <div className="timeline-content">
                 <span className="tech-type timeline-status">{item.statusLabel}</span>
@@ -22,6 +24,7 @@ export default function Education() {
               </div>
             </article>
           ))}
+
         </div>
 
         <aside className="journey-aside gsap-reveal">

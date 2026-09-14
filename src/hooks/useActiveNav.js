@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const SECTION_IDS = ["home", "about", "projects", "skills", "education", "contact"];
+const SECTION_IDS = ["home", "about", "skills", "projects", "education", "contact"];
 
 export function useActiveNav() {
   const [activeSection, setActiveSection] = useState("home");

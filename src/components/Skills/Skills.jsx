@@ -3,17 +3,12 @@ import SectionHeading from "../SectionHeading/SectionHeading";
 import { skillCategories } from "../../data/skills";
 
 const categoryIcons = { programming: Code2, webdev: Braces, iot: CircuitBoard, tools: Wrench };
-const marquee = ["C++", "Java", "JavaScript", "ESP32", "Arduino", "DSA", "Git", "Figma", "HTML5", "CSS3"];
 
 export default function Skills() {
   return (
     <section id="skills" className="skills-section" aria-labelledby="skills-title">
-      <div className="skills-marquee" aria-hidden="true">
-        <div>{[...marquee, ...marquee].map((item, index) => <span className="display-type" key={`${item}-${index}`}>{item}<i>✦</i></span>)}</div>
-      </div>
-
       <div className="section-shell">
-        <SectionHeading index="03" eyebrow="Toolkit" title={<><span id="skills-title">Fundamentals first.</span><br />Tools with purpose.</>} description="A growing toolkit across programming, the web, and connected hardware—supported by regular problem-solving practice." />
+        <SectionHeading index="02" eyebrow="The toolkit" title={<><span id="skills-title">Fundamentals first.</span><br />Tools with purpose.</>} description="A growing toolkit across programming, the web, and connected hardware—supported by regular problem-solving practice." />
 
         <div className="skills-grid">
           {skillCategories.map((category, index) => {
@@ -22,7 +17,7 @@ export default function Skills() {
               <article className="skill-card gsap-reveal" key={category.id}>
                 <div className="skill-card-head"><span className="tech-type">0{index + 1}</span><Icon size={25} strokeWidth={1.6} /></div>
                 <h3 className="display-type">{category.title}</h3>
-                <ul>{category.skills.map((skill) => <li key={skill.name}><span>{skill.name}</span><i style={{ backgroundColor: skill.color }} /></li>)}</ul>
+                <ul>{category.skills.map((skill) => <li key={skill.name}>{skill.name}</li>)}</ul>
               </article>
             );
           })}

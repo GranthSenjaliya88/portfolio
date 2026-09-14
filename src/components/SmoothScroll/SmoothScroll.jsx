@@ -11,11 +11,12 @@ export default function SmoothScroll({ paused }) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !window.matchMedia("(pointer: fine)").matches) return undefined;
 
     const lenis = new Lenis({
-      lerp: 0.075,
+      lerp: 0.12,
       smoothWheel: true,
-      wheelMultiplier: 0.9,
+      wheelMultiplier: 1,
       touchMultiplier: 1.05,
-      anchors: { offset: -76 },
+      // Lenis already accounts for the document's scroll-padding-top.
+      anchors: true,
     });
     lenisRef.current = lenis;
 

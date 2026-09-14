@@ -43,8 +43,8 @@ export default function App() {
       <main id="main-content" tabIndex={-1}>
         <Hero onOpenResume={openResume} />
         <About />
-        <Projects />
         <Skills />
+        <Projects />
         <Education />
         <Contact />
       </main>
